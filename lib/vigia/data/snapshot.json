@@ -1,0 +1,34 @@
+{
+  "source": [
+    {
+      "path": "src/score.ts",
+      "content": "export function getCreditScore(user) {\n  return user.score;\n}\n\nexport function getRiskTier(user) {\n  return user.tier;\n}"
+    },
+    {
+      "path": "src/report.ts",
+      "content": "export function generateReport(data) {\n  return { report: data };\n}"
+    }
+  ],
+  "renames": {
+    "getUserScore": "getCreditScore",
+    "getRiskLevel": "getRiskTier"
+  },
+  "docs": [
+    {
+      "id": "d01",
+      "path": "docs/api.md",
+      "content": "To read a score, call `getCreditScore`; to build a summary, call `generateReport`."
+    },
+    {
+      "id": "d02",
+      "path": "docs/guide.md",
+      "content": "Call `getUserScore` to compute the credit score for a user."
+    },
+    {
+      "id": "d03",
+      "path": "docs/tiers.md",
+      "content": "`getRiskLevel` returns the risk tier. `computeScore` was the legacy entry point."
+    }
+  ],
+  "staleDocs": ["d02", "d03"]
+}

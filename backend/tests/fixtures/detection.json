@@ -1,0 +1,12 @@
+{
+  "symbolsExtracted": 3,
+  "referencesFound": 5,
+  "staleDocs": 2,
+  "detectedStaleDocs": 2,
+  "detectionRecall": 1.0,
+  "falsePositives": 0,
+  "staleReferences": 3,
+  "autoCorrected": 2,
+  "flaggedOnly": 1,
+  "autoCorrectionRate": 0.6666666666666666
+}
