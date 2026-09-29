@@ -1,21 +1,56 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Alert } from "@/design-system/components/alert";
 import { Card } from "@/design-system/components/card";
 import { MetricCard } from "@/design-system/components/metric-card";
 import { StatusBadge } from "@/design-system/components/status-badge";
-import { getRenames, getResult, getSymbols } from "@/lib/vigia/demo";
+import { getResult } from "@/lib/vigia/demo";
+import { extractSymbols } from "@/lib/vigia/extract";
+import { detect } from "@/lib/vigia/detect";
+import type { DetectionResult, DocFile } from "@/lib/vigia/types";
 
 const RESULT = getResult();
-const SYMBOLS = getSymbols();
-const RENAMES = getRenames();
+
+const RENAMES: Record<string, string> = { getUserScore: "getCreditScore" };
+
+const SOURCE_PREFILL = `export function getCreditScore(user) { return user.score; }
+export function getRiskTier(user) { return user.tier; }`;
+
+const DOCS_PREFILL = `Call \`getUserScore\` to compute the score.
+Use \`getCreditScore\` and \`getRiskTier\`.`;
 
 function pct(v: number) {
   return `${(v * 100).toFixed(0)}%`;
 }
 
+function parseDocs(text: string): DocFile[] {
+  return text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line, i) => ({
+      id: `doc${i + 1}`,
+      path: `docs/${i + 1}.md`,
+      content: line,
+    }));
+}
+
 export default function AppPage() {
+  const [sourceText, setSourceText] = useState(SOURCE_PREFILL);
+  const [docsText, setDocsText] = useState(DOCS_PREFILL);
+  const [symbols, setSymbols] = useState<string[]>([]);
+  const [result, setResult] = useState<DetectionResult | null>(null);
+
+  function run() {
+    const source = [{ path: "src/index.ts", content: sourceText }];
+    const extracted = extractSymbols(source);
+    const docs = parseDocs(docsText);
+    setSymbols(extracted);
+    setResult(detect(extracted, RENAMES, docs, []));
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-10 border-b border-[var(--border)] bg-background/80 backdrop-blur-md">
@@ -80,83 +115,103 @@ export default function AppPage() {
           />
         </div>
 
-        {/* ── SYMBOLS + RENAMES ──────────────── */}
+        {/* ── PLAYGROUND ──────────────────────── */}
         <section>
-          <h2 className="text-lg font-semibold tracking-tight text-foreground mb-1">Snapshot del repo</h2>
+          <h2 className="text-lg font-semibold tracking-tight text-foreground mb-1">Detección en vivo</h2>
           <p className="text-sm text-muted-foreground mb-5">
-            El código exporta {SYMBOLS.length} símbolos. El diff renombró dos de ellos; los docs
-            aún referencian los nombres viejos.
+            Extrae símbolos del código fuente, escanea los docs en busca de referencias en
+            backticks y marca stale los símbolos que ya no existen. Un rename conocido (getUserScore
+            → getCreditScore) se autocorrige; lo demás queda para revisión manual.
           </p>
+
           <div className="grid gap-4 sm:grid-cols-2">
             <Card className="p-4">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Símbolos actuales</p>
-              <div className="flex flex-wrap gap-1.5">
-                {SYMBOLS.map((s) => (
-                  <span key={s} className="rounded-full border border-info/25 bg-info/10 px-2.5 py-0.5 font-mono text-xs text-info">{s}</span>
-                ))}
-              </div>
+              <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Código fuente</p>
+              <textarea
+                value={sourceText}
+                onChange={(e) => setSourceText(e.target.value)}
+                rows={6}
+                className="w-full rounded-[var(--radius-md)] border border-[var(--border)] bg-background px-3 py-2 text-sm font-mono text-foreground focus:outline-none focus:ring-2 focus:ring-ring/60"
+              />
             </Card>
             <Card className="p-4">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Renames del diff</p>
-              <div className="space-y-1.5">
-                {Object.entries(RENAMES).map(([old, next]) => (
-                  <p key={old} className="font-mono text-xs text-foreground">
-                    {old} <span className="text-muted-foreground">→</span> <span className="text-success">{next}</span>
-                  </p>
-                ))}
-              </div>
+              <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Docs (una línea por doc)</p>
+              <textarea
+                value={docsText}
+                onChange={(e) => setDocsText(e.target.value)}
+                rows={6}
+                className="w-full rounded-[var(--radius-md)] border border-[var(--border)] bg-background px-3 py-2 text-sm font-mono text-foreground focus:outline-none focus:ring-2 focus:ring-ring/60"
+              />
             </Card>
           </div>
-        </section>
 
-        {/* ── DOCS ───────────────────────────── */}
-        <section>
-          <h2 className="text-lg font-semibold tracking-tight text-foreground mb-1">Docs y su estado</h2>
-          <p className="text-sm text-muted-foreground mb-5">
-            Cada doc se marca stale si referencia un símbolo que ya no existe. Los renames se
-            autocorrigen; las eliminaciones se marcan para revisión humana.
-          </p>
-          <div className="space-y-4">
-            {RESULT.docs.map((d) => (
-              <Card key={d.id} className="p-5">
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <div>
-                    <p className="font-mono text-xs text-muted-foreground">{d.id} · {d.path}</p>
-                    <h3 className="font-semibold text-foreground mt-0.5">
-                      {d.stale ? "Referencias obsoletas" : "Al día"}
-                    </h3>
-                  </div>
-                  {d.stale ? (
-                    <StatusBadge tone="warning" dot>stale</StatusBadge>
-                  ) : (
-                    <StatusBadge tone="success" dot>ok</StatusBadge>
-                  )}
+          <Card className="mt-4 p-4">
+            <button
+              onClick={run}
+              className="w-full rounded-[var(--radius-md)] bg-accent px-4 py-2.5 text-sm font-medium text-[#ffffff] hover:bg-accent/90 transition-colors"
+            >
+              Detectar stale
+            </button>
+          </Card>
+
+          {result && (
+            <div className="mt-6 space-y-5">
+              <Card className="p-4">
+                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">
+                  Símbolos extraídos ({symbols.length})
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {symbols.map((s) => (
+                    <span key={s} className="rounded-full border border-info/25 bg-info/10 px-2.5 py-0.5 font-mono text-xs text-info">
+                      {s}
+                    </span>
+                  ))}
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{d.content}</p>
-                {d.stale && (
-                  <div className="space-y-2">
-                    {d.staleReferences.map((r, i) => (
-                      <div key={i} className="flex flex-wrap items-center gap-2 text-xs">
-                        <span className="font-mono text-danger">{r.symbol}</span>
-                        {r.corrected ? (
-                          <>
-                            <span className="text-muted-foreground">→ autocorregido a</span>
-                            <span className="font-mono text-success">{r.corrected}</span>
-                          </>
-                        ) : (
-                          <StatusBadge tone="danger">eliminado · revisión manual</StatusBadge>
-                        )}
-                      </div>
-                    ))}
-                    <div className="rounded-[var(--radius-md)] bg-muted/30 px-3 py-2 mt-2">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Doc corregido</p>
-                      <p className="font-mono text-sm text-foreground">{d.correctedContent}</p>
-                    </div>
-                  </div>
-                )}
               </Card>
-            ))}
-          </div>
+
+              <div className="space-y-4">
+                {result.docs.map((d) => (
+                  <Card key={d.id} className="p-5">
+                    <div className="flex items-start justify-between gap-4 mb-3">
+                      <div>
+                        <p className="font-mono text-xs text-muted-foreground">{d.id} · {d.path}</p>
+                        <h3 className="font-semibold text-foreground mt-0.5">
+                          {d.stale ? "Referencias obsoletas" : "Al día"}
+                        </h3>
+                      </div>
+                      {d.stale ? (
+                        <StatusBadge tone="warning" dot>stale</StatusBadge>
+                      ) : (
+                        <StatusBadge tone="success" dot>ok</StatusBadge>
+                      )}
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-3">{d.content}</p>
+                    {d.stale && (
+                      <div className="space-y-2">
+                        {d.staleReferences.map((r, i) => (
+                          <div key={i} className="flex flex-wrap items-center gap-2 text-xs">
+                            <span className="font-mono text-danger">{r.symbol}</span>
+                            {r.corrected ? (
+                              <>
+                                <span className="text-muted-foreground">→ autocorregido a</span>
+                                <span className="font-mono text-success">{r.corrected}</span>
+                              </>
+                            ) : (
+                              <StatusBadge tone="danger">eliminado · revisión manual</StatusBadge>
+                            )}
+                          </div>
+                        ))}
+                        <div className="rounded-[var(--radius-md)] bg-muted/30 px-3 py-2 mt-2">
+                          <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Doc corregido</p>
+                          <p className="font-mono text-sm text-foreground">{d.correctedContent}</p>
+                        </div>
+                      </div>
+                    )}
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* ── NOTE ───────────────────────────── */}
