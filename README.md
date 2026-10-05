@@ -1,85 +1,79 @@
-# Vigia
+# Documentation drift
 
-**Self-healing technical documentation** — extract symbols from code, flag stale references in
-docs, and auto-correct renames using the commit diff.
+[Español](README.es.md) · [Try the demo](https://vigia-manueldeasis27-2515s-projects.vercel.app/en/app) · [Case study](https://manueldeasis.com/en/projects/vigia) · [Source](https://github.com/mdeasis27/vigia)
 
-> **Result:** the detector flags **2/2 stale docs (100% recall, 0 false positives)**. Of the 3
-> stale references, **2 are auto-corrected** (renames from the diff) and **1 is flagged for
-> manual review** (a removal with no rename). The auto-correction rate is **66.7%** — the honest
-> ceiling: a removal can't be auto-corrected without a rename.
+![Actual interactive local interface](docs/images/cover.png)
 
----
+Edit local source and document snapshots and provide rename mappings.
 
-## Result
+## Two situations to compare
 
-| Metric | Value |
-|---|---|
-| Symbols extracted (2 source files) | 3 |
-| Doc references found | 5 |
-| Stale docs detected | 2 / 2 (100% recall) |
-| False positives | 0 |
-| Stale references | 3 |
-| Auto-corrected (renames) | 2 |
-| Flagged for manual review (removal) | 1 |
-| Auto-correction rate | 66.7% |
+**Known rename:** oldName:newName A replacement is proposed.
 
-The code renamed `getUserScore` → `getCreditScore` and `getRiskLevel` → `getRiskTier`, and
-removed `computeScore`. Docs `d02` and `d03` still reference the old/removed names. The healer
-rewrites the two renames and flags the removal.
+![Known rename](docs/images/scenario-a.png)
 
----
+**Unknown reference:** removedName Review is requested.
+
+![Unknown reference](docs/images/scenario-b.png)
+
+## Business use case
+
+Renamed code leaves stale references in documentation.
+
+**Who uses it:** Documentation owner.
+
+**The decision:** Apply a reviewed documentation correction.
+
+Choose a snapshot, connect references to symbols, and preview a proposed diff.
+
+### Try the decision
+
+**Known rename:** oldName:newName A replacement is proposed.
+
+**Unknown reference:** removedName Review is requested.
+
+Choose a scenario, edit its controls and run the local computation. Step through the visual process or reveal all steps. Reset before comparing the second scenario.
+
+## How to try it
+
+Open `/en/app` (English, default) or `/es/app` (Spanish). Change the scenario inputs and run the computation. Inspect the resulting decision, evidence and computed trace. Playback reveals completed local steps; it does not measure a live model. Reset starts a new local scenario. Changing language resets the scenario; the interface displays a reset notice.
+
+The primary demo needs no account, API key or database. Public links refer to the existing deployment; local redesign changes are pending publication.
+
+## Local setup and verification
+
+Requires Node.js 22 and pnpm 10.
+
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
+pnpm test
+node node_modules/typescript/bin/tsc --noEmit --incremental false
+pnpm lint
+pnpm build
+```
+
+Open `http://localhost:3000/en/app`. Recorded validation covers tests, lint, TypeScript and production builds. See [command results](docs/quality/decision-lab-verification.json) and [browser component checks](docs/quality/decision-lab-browser.json). The new browser checks exercise real React components and production CSS with controlled locale navigation; they do not certify Next routes or public deployment.
 
 ## Architecture
 
-```
-lib/vigia/                  # canonical core (TypeScript, tested)
-  extract.ts                #   extract `export function` symbols + backtick references
-  detect.ts                 #   staleness detection + rename auto-correction
-  benchmark.ts              #   detection recall · auto-correction rate · false positives
-  demo.ts                   #   wires the snapshot into every number
-  data/                     #   snapshot.json (source + docs + renames + ground truth)
-  fixtures/                 #   detection.json (pinned metrics)
-backend/                    # same math in Python + pytest (authoritative)
-  src/vigia/                #   extract.py · detect.py · benchmark.py
-  tests/                    #   pinned to tests/fixtures/{snapshot,detection}.json
-app/                        # Next.js landing + demo dashboard (Vercel, demo mode)
-```
+- `app/[lang]/`: localized browser experience.
+- `lib/experience/`: typed local adapter, validation and run traces.
+- `design-system/`: shared visual tokens, locale controls and execution/replay presentation.
+- `app/api/`: optional server integrations; the primary demo does not require them.
 
-Extraction and detection are deterministic. The rename map is the "diff" a real GitHub Action
-would read from the commit — it is the signal that separates an auto-correctable rename from a
-flagged removal. Both languages reproduce the pinned metrics exactly.
+Technology: Next.js 16, TypeScript, Python, Vitest, pytest, Tailwind CSS v4.
 
-## Design decisions & tradeoffs
+## Evidence and limitations
 
-1. **The rename diff is the auto-correction signal.** Detecting staleness is a set-difference
-   (`references − symbols`); *correcting* it requires knowing the new name, which only the commit
-   diff provides. Removals are flagged, not guessed.
-2. **Backtick code spans as the reference grammar.** The demo parses `` `identifier` `` spans —
-   a tiny, honest subset of how real docs reference symbols. It deliberately ignores
-   `code(id)`-style spans to avoid false positives.
-3. **Self-healing is "open a PR", not "rewrite in place".** The demo produces the corrected
-   content as the proposed change; production wraps it in a pull request for review.
+Reference lines connect to symbols and highlight a proposed edit.
 
-## What did not work
+Highlighted references and a proposed diff; no files are written and no external PR is opened.
 
-- **Removals have no deterministic correction.** `computeScore` is stale and no rename exists,
-   so the only honest action is to flag it. The 66.7% auto-correction rate reflects that: you
-   can auto-fix what the diff explains, and only flag what it can't.
-- **The reference grammar is narrower than real docs.** Headings, links, and prose mentions
-   aren't parsed; real systems combine backtick spans with prose symbol detection and link
-   resolution.
+Separates safe proposals from references needing review.
 
-## Run it
+**Limits:** No files are changed by the preview. These portfolio prototypes do not claim measured production impact.
 
-```bash
-# frontend demo + TS tests
-pnpm install && pnpm dev      # http://localhost:3000
-pnpm test                     # 6 vitest tests
+Inputs use fictional or anonymized examples. Optional live integrations require their own credentials and operational setup. Secrets belong in the configured secret manager, never in local secret files or Git. Use the existing `infisical run -- <command>` workflow when live integration is needed. This repository does not publish or deploy automatically as part of the local demo.
 
-# backend (authoritative math) — Python 3.12+
-cd backend && uv sync --extra dev && uv run pytest   # 4 tests, pinned fixtures
-```
-
-## Stack
-
-Next.js 16 · TypeScript · Vitest · Tailwind v4 · Python 3.13 · pytest
+![Actual English demo capture](docs/images/demo.png)

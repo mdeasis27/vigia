@@ -1,0 +1,53 @@
+{
+  "repository": "vigia",
+  "scope": "Real React component with controlled locale; Next routes not tested.",
+  "checks": [
+    {
+      "locale": "en",
+      "scenarios": [
+        {
+          "preset": "Known rename\nA diff is proposed",
+          "outcome": "Review the proposed diff\n\nThe rename map produced a local proposal; no file was changed."
+        },
+        {
+          "preset": "Unmapped removal\nA reviewer is required",
+          "outcome": "Keep this reference in review\n\nNo rename map supports this reference, so it remains a human review item."
+        }
+      ],
+      "localizedValidationError": "Source and documentation text are required.",
+      "mobileNoOverflow": true,
+      "reducedMotion": true,
+      "keyboard": true,
+      "noRequests": true,
+      "sceneChangesWithScenario": true,
+      "editingClearsPresetAndTrace": true,
+      "resetRestoresFirstPreset": true,
+      "cancelControlPresent": true,
+      "presetRestoresAllInputs": true
+    },
+    {
+      "locale": "es",
+      "scenarios": [
+        {
+          "preset": "Renombre conocido\nSe propone un diff",
+          "outcome": "Revisa el diff propuesto\n\nEl mapa de renombres produjo una propuesta local; no se cambió ningún archivo."
+        },
+        {
+          "preset": "Eliminación sin mapa\nSe requiere un revisor",
+          "outcome": "Mantén esta referencia en revisión\n\nNingún mapa de renombres respalda esta referencia, por lo que permanece para revisión humana."
+        }
+      ],
+      "localizedValidationError": "Introduce texto fuente y documentación para preparar la vista previa.",
+      "mobileNoOverflow": true,
+      "reducedMotion": true,
+      "keyboard": true,
+      "noRequests": true,
+      "sceneChangesWithScenario": true,
+      "editingClearsPresetAndTrace": true,
+      "resetRestoresFirstPreset": true,
+      "cancelControlPresent": true,
+      "presetRestoresAllInputs": true
+    }
+  ],
+  "errors": []
+}
