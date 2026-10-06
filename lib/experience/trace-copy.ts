@@ -1,3 +1,9 @@
-import type {Locale} from '@/design-system/i18n/locale';
-const copy:Record<string,{en:string;es:string}>={'invoice.extracted':{en:'Invoice fields extracted',es:'Campos de factura extraídos'},'costs.compared':{en:'Cost scenarios compared',es:'Escenarios de costo comparados'},'ocr.extracted':{en:'OCR fields read',es:'Campos OCR leídos'},'fields.validated':{en:'Fields checked without changes',es:'Campos revisados sin cambios'},'question.routed':{en:'Question routed to a safe template',es:'Pregunta dirigida a una plantilla segura'},'template.validated':{en:'Template schema validated',es:'Esquema de plantilla validado'},'template.refused':{en:'Unsupported request refused',es:'Solicitud no compatible rechazada'},'scores.measured':{en:'Score distributions measured',es:'Distribuciones de puntuación medidas'},'decision.advance':{en:'Statistical gate recommends advance',es:'La puerta estadística recomienda avanzar'},'decision.hold':{en:'Statistical gate recommends hold',es:'La puerta estadística recomienda mantener'},'rollout.advance':{en:'Traffic stage can advance',es:'La etapa puede avanzar'},'rollout.hold':{en:'Traffic stage should hold',es:'La etapa debe mantenerse'},'rollout.kill':{en:'Kill switch triggered',es:'Interruptor de apagado activado'},'logs.parsed':{en:'Anonymous input parsed',es:'Entrada anónima analizada'},'logs.deduplicated':{en:'Near duplicates removed',es:'Duplicados cercanos eliminados'},'symbols.extracted':{en:'Source symbols extracted',es:'Símbolos extraídos'},'references.reviewed':{en:'Documentation references reviewed',es:'Referencias revisadas'}};
-export function traceCopy(locale:Locale,key:string){return copy[key]?.[locale]??(locale==='en'?'Computed step':'Paso calculado');}
+import type { Locale } from "@/design-system/i18n/locale";
+
+const COPY: Record<string, { en: string; es: string }> = {
+  "batch.1": { en: "references 1 to 5 checked", es: "referencias 1 a 5 revisadas" },
+  "batch.2": { en: "references 6 to 10 checked", es: "referencias 6 a 10 revisadas" },
+  "batch.3": { en: "references 11 to 15 checked", es: "referencias 11 a 15 revisadas" },
+  "batch.4": { en: "references 16 to 19 checked", es: "referencias 16 a 19 revisadas" },
+};
+export function traceCopy(locale: Locale, key: string) { return COPY[key]?.[locale] ?? key; }

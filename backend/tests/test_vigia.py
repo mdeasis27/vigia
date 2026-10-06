@@ -44,10 +44,19 @@ def test_flags_stale_docs_and_corrects_renames():
     snapshot = _load("snapshot.json")
     result = benchmark(snapshot)
     stale_ids = [d["id"] for d in result["docs"] if d["stale"]]
-    assert stale_ids == ["d02", "d03"]
+    assert stale_ids == ["d02", "d03", "d05", "d07", "d09", "d11"]
 
     d02 = next(d for d in result["docs"] if d["id"] == "d02")
     d03 = next(d for d in result["docs"] if d["id"] == "d03")
     assert d02["staleReferences"][0]["corrected"] == "getCreditScore"
     assert "`getCreditScore`" in d02["correctedContent"]
     assert next(r for r in d03["staleReferences"] if r["symbol"] == "computeScore")["corrected"] is None
+
+
+def test_reference_outcomes_match_fixture():
+    from vigia.outcomes import reference_outcomes
+
+    snapshot = _load("snapshot.json")
+    for k, expected in _load("outcomes.json")["outcomes"].items():
+        assert reference_outcomes(snapshot, int(k)) == expected
+    assert reference_outcomes(snapshot, None) == _load("outcomes.json")["outcomes"]["5"]
