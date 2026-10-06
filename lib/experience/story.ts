@@ -38,7 +38,7 @@ export const STORY: Record<"en" | "es", VigiaStory> = {
     why: { title: "Why I built it", text: "" },
     tryIt: {
       heading: { before: "Try", accent: "it" },
-      lead: "Twelve pages mention 19 functions. Seven of those mentions are broken: five functions were renamed and two were removed.",
+      lead: "Twelve pages make 19 mentions of 13 functions. Seven of those mentions are broken: five functions were renamed and two were removed.",
       question: (n) => `Before you run it, place a bet: with ${n} ${n === 1 ? "rename" : "renames"} on record, does the team fix 3 or fewer broken references by hand?`,
       yes: "Yes, 3 or fewer",
       no: "No, more than 3",
@@ -120,7 +120,7 @@ export const STORY: Record<"en" | "es", VigiaStory> = {
     why: { title: "Por qué lo hice", text: "" },
     tryIt: {
       heading: { accent: "Pruébalo" },
-      lead: "Doce páginas mencionan 19 funciones. Siete de esas menciones están rotas: cinco funciones cambiaron de nombre y dos se quitaron.",
+      lead: "Doce páginas hacen 19 menciones a 13 funciones. Siete de esas menciones están rotas: cinco funciones cambiaron de nombre y dos se quitaron.",
       question: (n) => `Antes de correrlo, apuesta: con ${n} ${n === 1 ? "cambio de nombre registrado" : "cambios de nombre registrados"}, ¿el equipo arregla a mano 3 o menos referencias rotas?`,
       yes: "Sí, 3 o menos",
       no: "No, más de 3",

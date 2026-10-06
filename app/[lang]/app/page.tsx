@@ -44,7 +44,7 @@ export default function Page() {
         <section className="min-w-0 rounded-xl border border-border bg-surface p-5">
           <MissionPrompt locale={locale} question={t.tryIt.question(renames)} prediction={prediction} onPredict={setPrediction} locked={Boolean(run) || demo.running} options={[{ id: "yes", label: t.tryIt.yes }, { id: "no", label: t.tryIt.no }]} />
           <label className="mt-5 block text-sm">{t.tryIt.renamesLabel} <span className="font-mono">{renames}</span>
-            <input aria-label={t.tryIt.renamesLabel} className="mt-2 w-full" type="range" min="0" max={TOTAL_RENAMES} step="1" value={renames} onChange={e => { setRenames(Number(e.target.value)); clear(); }} />
+            <input aria-label={t.tryIt.renamesLabel} aria-valuetext={`${renames} / ${TOTAL_RENAMES}`} className="mt-2 w-full" type="range" min="0" max={TOTAL_RENAMES} step="1" value={renames} onChange={e => { setRenames(Number(e.target.value)); clear(); }} />
           </label>
           <p className="mt-4 text-xs leading-5 text-muted-foreground">{t.tryIt.note}</p>
           <div className="mt-6 flex flex-wrap gap-2">
