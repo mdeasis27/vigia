@@ -1,7 +1,5 @@
 import type { Heading } from "@/design-system/demo/project-story";
 
-type NodeCopy = { name: string; sub: string; analogy: string };
-
 export interface VigiaStory {
   name: string;
   oneLiner: string;
@@ -13,7 +11,16 @@ export interface VigiaStory {
   fit: { heading: Heading; worthLabel: string; worth: string; notLabel: string; not: string };
   proves: { heading: Heading; text: string };
   engineers: { summary: string; points: string[]; repoLabel: string };
-  scene: { title: string; caption: string; statusLabels: { active: string; danger: string; success: string }; tapeLabel: string; nodes: { docs: NodeCopy; watcher: NodeCopy; renamed: NodeCopy; person: NodeCopy }; tape: { served: string; rerouted: string; lost: string }; byHandOf: (n: number) => string };
+  scene: {
+    title: string; caption: string; tapeLabel: string;
+    mapTitle: (pages: number) => string;
+    mapLabel: (pages: number, mentions: number) => string;
+    noticeTitle: string; noticeNote: (listed: number, total: number) => string; noticeEmpty: string;
+    inspector: string; waiting: string; checked: (n: number) => string;
+    say: { served: string; rerouted: string; lost: string };
+    tape: { served: string; rerouted: string; lost: string };
+    byHandOf: (n: number, total: number) => string;
+  };
 }
 
 export const STORY: Record<"en" | "es", VigiaStory> = {
@@ -86,17 +93,19 @@ export const STORY: Record<"en" | "es", VigiaStory> = {
     },
     scene: {
       title: "What happened to each mention in the docs",
-      caption: "Watch each mention stay valid, get its new name, or wait for a person.",
-      statusLabels: { active: "checking", success: "renamed", danger: "needs a person" },
+      caption: "Each block is a page and each sign is a mention of a function. The inspector reads every sign in order: green still matches the code, blue takes its new name from the notice, red is crossed out until a person redraws that corner.",
       tapeLabel: "Nineteen mentions across twelve pages",
-      nodes: {
-        docs: { name: "Docs", sub: "12 pages, 19 mentions", analogy: "the map" },
-        watcher: { name: "Watcher", sub: "checks against code", analogy: "the inspector" },
-        renamed: { name: "Renamed", sub: "new name applied", analogy: "updated map" },
-        person: { name: "For a person", sub: "no new name known", analogy: "demolished street" },
-      },
+      mapTitle: (pages) => `Documentation map, ${pages} pages`,
+      mapLabel: (pages, mentions) => `Map of ${pages} documentation pages with ${mentions} street signs. An inspector checks each sign against the code.`,
+      noticeTitle: "City notice",
+      noticeNote: (listed, total) => `The notice lists ${listed} of the ${total} renames.`,
+      noticeEmpty: "No rename on record yet.",
+      inspector: "inspector",
+      waiting: "The inspector waits at the corner.",
+      checked: (n) => `${n} mentions checked`,
+      say: { served: "still valid", rerouted: "renamed with the notice", lost: "no new name, needs a person" },
       tape: { served: "still valid", rerouted: "renamed automatically", lost: "needs a person" },
-      byHandOf: (n) => `Left to fix by hand: ${n} of 7`,
+      byHandOf: (n, total) => `Left to fix by hand: ${n} of ${total}`,
     },
   },
   es: {
@@ -168,17 +177,19 @@ export const STORY: Record<"en" | "es", VigiaStory> = {
     },
     scene: {
       title: "Lo que pasó con cada mención en la documentación",
-      caption: "Mira cómo cada mención sigue válida, recibe su nombre nuevo o espera a una persona.",
-      statusLabels: { active: "revisando", success: "renombrada", danger: "necesita a alguien" },
+      caption: "Cada cuadra es una página y cada letrero es una mención a una función. El inspector lee los letreros en orden: el verde sigue coincidiendo con el código, el azul toma su nombre nuevo del aviso y el rojo queda tachado hasta que una persona redibuje esa esquina.",
       tapeLabel: "Diecinueve menciones en doce páginas",
-      nodes: {
-        docs: { name: "Documentación", sub: "12 páginas, 19 menciones", analogy: "el mapa" },
-        watcher: { name: "Vigía", sub: "compara con el código", analogy: "el inspector" },
-        renamed: { name: "Renombrada", sub: "nombre nuevo aplicado", analogy: "mapa actualizado" },
-        person: { name: "Para una persona", sub: "sin nombre nuevo", analogy: "calle demolida" },
-      },
+      mapTitle: (pages) => `Mapa de la documentación, ${pages} páginas`,
+      mapLabel: (pages, mentions) => `Mapa de ${pages} páginas de documentación con ${mentions} letreros de calle. Un inspector compara cada letrero con el código.`,
+      noticeTitle: "Aviso de la ciudad",
+      noticeNote: (listed, total) => `El aviso trae ${listed} de los ${total} cambios de nombre.`,
+      noticeEmpty: "Todavía no hay cambios de nombre registrados.",
+      inspector: "inspector",
+      waiting: "El inspector espera en la esquina.",
+      checked: (n) => `${n} menciones revisadas`,
+      say: { served: "sigue válida", rerouted: "renombrada con el aviso", lost: "sin nombre nuevo, necesita a una persona" },
       tape: { served: "sigue válida", rerouted: "renombrada sola", lost: "necesita a una persona" },
-      byHandOf: (n) => `Para arreglar a mano: ${n} de 7`,
+      byHandOf: (n, total) => `Para arreglar a mano: ${n} de ${total}`,
     },
   },
 };

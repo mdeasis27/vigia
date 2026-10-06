@@ -27,3 +27,18 @@ it("runs the mission, reveals in groups of five and stops when cancelled", async
   const c = new AbortController(); c.abort();
   await expect(runMission({ renames: 2 }, c.signal, () => {})).rejects.toThrow();
 });
+
+it("carries the pages and the notice cut to the renames on record", async () => {
+  const run = (k: number) => runMission({ renames: k }, new AbortController().signal, () => {});
+  const two = (await run(2)).result;
+  expect(two.pages).toHaveLength(12);
+  expect(two.pages[0]).toEqual({ id: "d01", name: "api.md" });
+  expect(two.notice).toEqual([{ from: "getUserScore", to: "getCreditScore" }, { from: "getRiskLevel", to: "getRiskTier" }]);
+  expect((await run(0)).result.notice).toEqual([]);
+  expect((await run(5)).result.notice).toHaveLength(TOTAL_RENAMES);
+  for (const k of [0, 2, 5]) {
+    const r = (await run(k)).result;
+    const notice = new Set(r.notice.map(n => n.from));
+    expect(r.items.filter(i => i.status === "rerouted").every(i => notice.has(i.symbol))).toBe(true);
+  }
+});

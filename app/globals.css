@@ -83,3 +83,10 @@
     font-weight: 600;
   }
 }
+
+/* Vigia scene: the inspector's lamp passes over each sign it checks. */
+@keyframes vigia-inspect { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 35% { box-shadow: 0 0 0 3px var(--warning); } }
+@keyframes vigia-lamp { from { opacity: 0; } to { opacity: 1; } }
+.vigia-inspect { animation: vigia-inspect 600ms ease-out both; }
+.vigia-lamp { animation: vigia-lamp 150ms ease-out both; }
+@media (prefers-reduced-motion: reduce) { .vigia-inspect, .vigia-lamp { animation: none; } }
