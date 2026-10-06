@@ -1,12 +1,12 @@
 {
-  "symbolsExtracted": 3,
-  "referencesFound": 5,
-  "staleDocs": 2,
-  "detectedStaleDocs": 2,
-  "detectionRecall": 1.0,
+  "symbolsExtracted": 6,
+  "referencesFound": 19,
+  "staleDocs": 6,
+  "detectedStaleDocs": 6,
+  "detectionRecall": 1,
   "falsePositives": 0,
-  "staleReferences": 3,
-  "autoCorrected": 2,
-  "flaggedOnly": 1,
-  "autoCorrectionRate": 0.6666666666666666
+  "staleReferences": 7,
+  "autoCorrected": 5,
+  "flaggedOnly": 2,
+  "autoCorrectionRate": 0.7142857142857143
 }

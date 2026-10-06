@@ -1,0 +1,586 @@
+{
+  "outcomes": {
+    "0": [
+      {
+        "docId": "d01",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d01",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d02",
+        "symbol": "getUserScore",
+        "status": "lost"
+      },
+      {
+        "docId": "d03",
+        "symbol": "computeScore",
+        "status": "lost"
+      },
+      {
+        "docId": "d03",
+        "symbol": "getRiskLevel",
+        "status": "lost"
+      },
+      {
+        "docId": "d04",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d05",
+        "symbol": "fetchLimits",
+        "status": "lost"
+      },
+      {
+        "docId": "d06",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d06",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d07",
+        "symbol": "getPayments",
+        "status": "lost"
+      },
+      {
+        "docId": "d08",
+        "symbol": "sendReminder",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "getRiskTier",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "notifyUser",
+        "status": "lost"
+      },
+      {
+        "docId": "d10",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d10",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d11",
+        "symbol": "exportCsv",
+        "status": "lost"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getRiskTier",
+        "status": "served"
+      }
+    ],
+    "1": [
+      {
+        "docId": "d01",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d01",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d02",
+        "symbol": "getUserScore",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d03",
+        "symbol": "computeScore",
+        "status": "lost"
+      },
+      {
+        "docId": "d03",
+        "symbol": "getRiskLevel",
+        "status": "lost"
+      },
+      {
+        "docId": "d04",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d05",
+        "symbol": "fetchLimits",
+        "status": "lost"
+      },
+      {
+        "docId": "d06",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d06",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d07",
+        "symbol": "getPayments",
+        "status": "lost"
+      },
+      {
+        "docId": "d08",
+        "symbol": "sendReminder",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "getRiskTier",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "notifyUser",
+        "status": "lost"
+      },
+      {
+        "docId": "d10",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d10",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d11",
+        "symbol": "exportCsv",
+        "status": "lost"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getRiskTier",
+        "status": "served"
+      }
+    ],
+    "2": [
+      {
+        "docId": "d01",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d01",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d02",
+        "symbol": "getUserScore",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d03",
+        "symbol": "computeScore",
+        "status": "lost"
+      },
+      {
+        "docId": "d03",
+        "symbol": "getRiskLevel",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d04",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d05",
+        "symbol": "fetchLimits",
+        "status": "lost"
+      },
+      {
+        "docId": "d06",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d06",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d07",
+        "symbol": "getPayments",
+        "status": "lost"
+      },
+      {
+        "docId": "d08",
+        "symbol": "sendReminder",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "getRiskTier",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "notifyUser",
+        "status": "lost"
+      },
+      {
+        "docId": "d10",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d10",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d11",
+        "symbol": "exportCsv",
+        "status": "lost"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getRiskTier",
+        "status": "served"
+      }
+    ],
+    "3": [
+      {
+        "docId": "d01",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d01",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d02",
+        "symbol": "getUserScore",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d03",
+        "symbol": "computeScore",
+        "status": "lost"
+      },
+      {
+        "docId": "d03",
+        "symbol": "getRiskLevel",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d04",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d05",
+        "symbol": "fetchLimits",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d06",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d06",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d07",
+        "symbol": "getPayments",
+        "status": "lost"
+      },
+      {
+        "docId": "d08",
+        "symbol": "sendReminder",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "getRiskTier",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "notifyUser",
+        "status": "lost"
+      },
+      {
+        "docId": "d10",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d10",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d11",
+        "symbol": "exportCsv",
+        "status": "lost"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getRiskTier",
+        "status": "served"
+      }
+    ],
+    "4": [
+      {
+        "docId": "d01",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d01",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d02",
+        "symbol": "getUserScore",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d03",
+        "symbol": "computeScore",
+        "status": "lost"
+      },
+      {
+        "docId": "d03",
+        "symbol": "getRiskLevel",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d04",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d05",
+        "symbol": "fetchLimits",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d06",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d06",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d07",
+        "symbol": "getPayments",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d08",
+        "symbol": "sendReminder",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "getRiskTier",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "notifyUser",
+        "status": "lost"
+      },
+      {
+        "docId": "d10",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d10",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d11",
+        "symbol": "exportCsv",
+        "status": "lost"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getRiskTier",
+        "status": "served"
+      }
+    ],
+    "5": [
+      {
+        "docId": "d01",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d01",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d02",
+        "symbol": "getUserScore",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d03",
+        "symbol": "computeScore",
+        "status": "lost"
+      },
+      {
+        "docId": "d03",
+        "symbol": "getRiskLevel",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d04",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d05",
+        "symbol": "fetchLimits",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d06",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d06",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d07",
+        "symbol": "getPayments",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d08",
+        "symbol": "sendReminder",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "getRiskTier",
+        "status": "served"
+      },
+      {
+        "docId": "d09",
+        "symbol": "notifyUser",
+        "status": "rerouted"
+      },
+      {
+        "docId": "d10",
+        "symbol": "generateReport",
+        "status": "served"
+      },
+      {
+        "docId": "d10",
+        "symbol": "listPayments",
+        "status": "served"
+      },
+      {
+        "docId": "d11",
+        "symbol": "exportCsv",
+        "status": "lost"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditLimit",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getCreditScore",
+        "status": "served"
+      },
+      {
+        "docId": "d12",
+        "symbol": "getRiskTier",
+        "status": "served"
+      }
+    ]
+  }
+}

@@ -28,7 +28,7 @@ describe("staleness + auto-correction", () => {
   it("flags exactly the ground-truth stale docs", () => {
     const result = benchmark(SNAPSHOT);
     const staleIds = result.docs.filter((d) => d.stale).map((d) => d.id);
-    expect(staleIds).toEqual(["d02", "d03"]);
+    expect(staleIds).toEqual(["d02", "d03", "d05", "d07", "d09", "d11"]);
   });
 
   it("auto-corrects renames and flags removals", () => {

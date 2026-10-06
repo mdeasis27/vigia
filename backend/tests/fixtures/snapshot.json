@@ -7,11 +7,26 @@
     {
       "path": "src/report.ts",
       "content": "export function generateReport(data) {\n  return { report: data };\n}"
+    },
+    {
+      "path": "src/limits.ts",
+      "content": "export function getCreditLimit(account) {\n  return account.limit;\n}"
+    },
+    {
+      "path": "src/payments.ts",
+      "content": "export function listPayments(order) {\n  return order.payments;\n}"
+    },
+    {
+      "path": "src/reminders.ts",
+      "content": "export function sendReminder(customer) {\n  return { to: customer.email };\n}"
     }
   ],
   "renames": {
     "getUserScore": "getCreditScore",
-    "getRiskLevel": "getRiskTier"
+    "getRiskLevel": "getRiskTier",
+    "fetchLimits": "getCreditLimit",
+    "getPayments": "listPayments",
+    "notifyUser": "sendReminder"
   },
   "docs": [
     {
@@ -28,7 +43,52 @@
       "id": "d03",
       "path": "docs/tiers.md",
       "content": "`getRiskLevel` returns the risk tier. `computeScore` was the legacy entry point."
+    },
+    {
+      "id": "d04",
+      "path": "docs/limits.md",
+      "content": "Call `getCreditLimit` to read the approved limit for an account."
+    },
+    {
+      "id": "d05",
+      "path": "docs/limits-faq.md",
+      "content": "Older integrations call `fetchLimits` before every purchase."
+    },
+    {
+      "id": "d06",
+      "path": "docs/payments.md",
+      "content": "Use `listPayments` to see every payment on an order, and `getCreditScore` for the score."
+    },
+    {
+      "id": "d07",
+      "path": "docs/payments-faq.md",
+      "content": "`getPayments` returns the payments made in the last month."
+    },
+    {
+      "id": "d08",
+      "path": "docs/reminders.md",
+      "content": "`sendReminder` emails the customer three days before the due date."
+    },
+    {
+      "id": "d09",
+      "path": "docs/collections.md",
+      "content": "When a payment is late, `notifyUser` sends the first notice and `getRiskTier` updates the tier."
+    },
+    {
+      "id": "d10",
+      "path": "docs/reports.md",
+      "content": "`generateReport` builds the monthly summary from `listPayments`."
+    },
+    {
+      "id": "d11",
+      "path": "docs/exports.md",
+      "content": "Run `exportCsv` to download the monthly summary as a spreadsheet."
+    },
+    {
+      "id": "d12",
+      "path": "docs/overview.md",
+      "content": "The service exposes `getCreditScore`, `getRiskTier` and `getCreditLimit`."
     }
   ],
-  "staleDocs": ["d02", "d03"]
+  "staleDocs": ["d02", "d03", "d05", "d07", "d09", "d11"]
 }
