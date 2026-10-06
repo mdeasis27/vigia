@@ -18,7 +18,7 @@ export interface VigiaStory {
 
 export const STORY: Record<"en" | "es", VigiaStory> = {
   en: {
-    name: "Docs drift watcher",
+    name: "Documentation drift",
     oneLiner: "When a street changes its name, old maps send you to an address that no longer exists.",
     chips: ["Living documentation", "2 min", "Live demo"],
     analogy: {
